@@ -1,0 +1,10 @@
+#root>div>div>div {
+  margin-left: 20px;
+  &>div>div {
+    margin-left: 20px;
+  }
+}
+
+.buttons {
+  margin-top: 30px;
+}
