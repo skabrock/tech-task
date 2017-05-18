@@ -1,7 +1,10 @@
 import { initialState, testState, testNode } from './data';
 import TreeView from './tree-view';
 
-let tree = new TreeView(document.getElementById('root'), initialState);
+const state = localStorage['TreeView']
+  ? JSON.parse(localStorage['TreeView'])
+  : initialState;
+let tree = new TreeView(document.getElementById('root'), state);
 
 // event listeners
 

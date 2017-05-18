@@ -19,6 +19,7 @@ export default class TreeView {
 
   update (state) {
     this.state = state;
+    window.localStorage['TreeView'] = JSON.stringify(state);
     this.render();
   }
 

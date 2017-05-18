@@ -9,7 +9,8 @@ var _treeView2 = _interopRequireDefault(_treeView);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var tree = new _treeView2.default(document.getElementById('root'), _data.initialState);
+var state = localStorage['TreeView'] ? JSON.parse(localStorage['TreeView']) : _data.initialState;
+var tree = new _treeView2.default(document.getElementById('root'), state);
 
 // event listeners
 
@@ -229,6 +230,7 @@ var TreeView = function () {
     key: 'update',
     value: function update(state) {
       this.state = state;
+      window.localStorage['TreeView'] = JSON.stringify(state);
       this.render();
     }
   }, {
