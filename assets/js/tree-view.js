@@ -10,7 +10,7 @@ export default class TreeView {
 
   render() {
     this.container.innerHTML = "";
-    this.container.appendChild(createNode(this.state));
+    this.container.appendChild(createNode(this.state, this.updateNode.bind(this)));
   }
 
   getData () {

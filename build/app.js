@@ -146,7 +146,7 @@ function deepReplaceById(state, id, obj) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var createNode = function createNode(data) {
+var createNode = function createNode(data, onUpdateNode) {
   var root_el = document.createElement("div"),
       label_el = document.createElement("label"),
       checkbox_el = document.createElement("input"),
@@ -155,19 +155,27 @@ var createNode = function createNode(data) {
   checkbox_el.type = 'checkbox';
   checkbox_el.id = data.id;
   checkbox_el.checked = data.isChecked;
+  checkbox_el.onchange = function (e) {
+    onUpdateNode(data.id, {
+      id: data.id,
+      name: data.name,
+      isChecked: e.target.checked,
+      childs: data.childs
+    });
+  };
   label_el.appendChild(text_node);
   root_el.appendChild(label_el);
   root_el.appendChild(checkbox_el);
   return root_el;
 };
 
-var createNodeList = function createNodeList(data) {
+var createNodeList = function createNodeList(data, onUpdateNode) {
   var root_el = document.createElement("div");
   for (var i = 0; i < data.length; i++) {
-    var element = createNode(data[i]);
+    var element = createNode(data[i], onUpdateNode);
     var children = data[i].childs;
     if (children && children.length) {
-      element.appendChild(createNodeList(children));
+      element.appendChild(createNodeList(children, onUpdateNode));
     }
     root_el.appendChild(element);
   }
@@ -210,7 +218,7 @@ var TreeView = function () {
     key: 'render',
     value: function render() {
       this.container.innerHTML = "";
-      this.container.appendChild((0, _nodeCreator2.default)(this.state));
+      this.container.appendChild((0, _nodeCreator2.default)(this.state, this.updateNode.bind(this)));
     }
   }, {
     key: 'getData',
